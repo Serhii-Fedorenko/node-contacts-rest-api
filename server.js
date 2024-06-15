@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
 
-const app = requre('./app.js');
+const app = require('./app.js');
 
 app.listen(3000)
