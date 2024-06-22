@@ -20,7 +20,7 @@ const userSchema = new Schema(
     subscription: {
       type: String,
       enum: ["starter", "pro", "business"],
-      dufault: "starter",
+      default: "starter",
     },
     token: {
       type: String,
