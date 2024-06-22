@@ -7,4 +7,6 @@ const usersRouter = express.Router();
 
 usersRouter.post("/register", validateBody(schemas.authSchema), ctrl.register);
 
+usersRouter.post("/login", validateBody(schemas.authSchema), ctrl.login);
+
 module.exports = usersRouter;
