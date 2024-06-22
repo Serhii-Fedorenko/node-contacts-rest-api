@@ -16,7 +16,7 @@ async function register(req, res) {
   const hashPassword = await bcrypt.hash(password, 10);
 
   const newUser = await User.create({ ...req.body, password: hashPassword });
-  
+
   res.status(201).json({
     email: newUser.email,
   });
@@ -44,7 +44,14 @@ async function login(req, res) {
   res.json({ token });
 }
 
+async function getCurrent(req, res) {
+  const { email, subscription } = req.user;
+
+  res.json({ email, subscription });
+}
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
+  getCurrent: ctrlWrapper(getCurrent),
 };
