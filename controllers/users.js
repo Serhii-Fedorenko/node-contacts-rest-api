@@ -40,6 +40,7 @@ async function login(req, res) {
   };
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+  await User.findByIdAndUpdate(user._id, { token });
 
   res.json({ token });
 }
@@ -50,8 +51,15 @@ async function getCurrent(req, res) {
   res.json({ email, subscription });
 }
 
+async function logout(req, res) {
+  const { _id } = req.user;
+  await User.findByIdAndUpdate(_id, { token: null });
+  res.status(204).json({ message: "No Content" });
+}
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
+  logout: ctrlWrapper(logout),
 };

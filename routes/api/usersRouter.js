@@ -9,6 +9,8 @@ usersRouter.post("/register", validateBody(schemas.authSchema), ctrl.register);
 
 usersRouter.post("/login", validateBody(schemas.authSchema), ctrl.login);
 
-usersRouter.post('/current', authenticate, ctrl.getCurrent)
+usersRouter.get("/current", authenticate, ctrl.getCurrent);
+
+usersRouter.post("/logout", authenticate, ctrl.logout);
 
 module.exports = usersRouter;
