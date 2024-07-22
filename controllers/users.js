@@ -67,9 +67,9 @@ async function login(req, res) {
 }
 
 async function getCurrent(req, res) {
-  const { email, subscription } = req.user;
+  const { email, subscription, avatarURL } = req.user;
 
-  res.json({ email, subscription });
+  res.json({ user: { email, subscription, avatarURL } });
 }
 
 async function logout(req, res) {
