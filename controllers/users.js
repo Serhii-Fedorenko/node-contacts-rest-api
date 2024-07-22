@@ -31,8 +31,8 @@ async function register(req, res) {
     user: {
       email: newUser.email,
       subscription: newUser.subscription,
-      avatarURL: newUser.avatarURL
-    }
+      avatarURL: newUser.avatarURL,
+    },
   });
 }
 
@@ -56,7 +56,14 @@ async function login(req, res) {
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
   await User.findByIdAndUpdate(user._id, { token });
 
-  res.json({ token });
+  res.json({
+    user: {
+      email: user.email,
+      subscription: user.subscription,
+      avatarURL: user.avatarURL,
+    },
+    token: token,
+  });
 }
 
 async function getCurrent(req, res) {
@@ -74,7 +81,7 @@ async function logout(req, res) {
 async function updateAvatar(req, res) {
   const { _id } = req.user;
   const { path: tempUpload, originalname } = req.file;
-  const fileName = `${_id}_${originalname}`
+  const fileName = `${_id}_${originalname}`;
   const resultUpload = path.join(avatarsDir, fileName);
   await fs.rename(tempUpload, resultUpload);
   const avatarURL = path.join("avatars", fileName);
