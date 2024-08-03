@@ -20,4 +20,11 @@ usersRouter.patch(
   ctrl.updateAvatar
 );
 
+usersRouter.patch(
+  "/subscription",
+  authenticate,
+  validateBody(schemas.subscriptionSchema),
+  ctrl.updateSubscription
+);
+
 module.exports = usersRouter;

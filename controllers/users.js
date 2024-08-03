@@ -90,10 +90,28 @@ async function updateAvatar(req, res) {
   res.json({ avatarURL });
 }
 
+async function updateSubscription(req, res) {
+  const { _id } = req.user;
+  const { subscription } = req.body;
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    { subscription },
+    { new: true }
+  );
+  res.json({
+    user: {
+      email: updatedUser.email,
+      subscription: updatedUser.subscription,
+      avatarURL: updatedUser.avatarURL,
+    },
+  });
+}
+
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
   updateAvatar: ctrlWrapper(updateAvatar),
+  updateSubscription: ctrlWrapper(updateSubscription),
 };
